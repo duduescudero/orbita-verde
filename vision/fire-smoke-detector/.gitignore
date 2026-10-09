@@ -1,0 +1,13 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Videos (ignorar todos exceto o de demonstracao)
+*.mp4
+*.avi
+*.mov
+!video_teste_real.mp4
+
+# IDE
+.vscode/
+.idea/

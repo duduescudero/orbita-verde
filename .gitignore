@@ -1,0 +1,23 @@
+# Arquivos locais e credenciais
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+node_modules/
+.expo/
+dist/
+target/
+bin/
+obj/
+*.db
+*.db-shm
+*.db-wal
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+artifacts/
+

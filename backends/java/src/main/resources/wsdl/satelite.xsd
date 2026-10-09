@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:tns="http://fiap.com.br/orbitaverde/soap"
+           targetNamespace="http://fiap.com.br/orbitaverde/soap"
+           elementFormDefault="qualified">
+
+    <!-- ===================== CONSULTAR SATELITE ===================== -->
+    <xs:element name="consultarSateliteRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="consultarSateliteResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="satelite" type="tns:SateliteType" minOccurs="0"/>
+                <xs:element name="mensagem" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- ===================== CADASTRAR SATELITE ===================== -->
+    <xs:element name="cadastrarSateliteRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="nome" type="xs:string"/>
+                <xs:element name="tipo" type="xs:string"/>
+                <xs:element name="altitude" type="xs:double"/>
+                <xs:element name="agencia" type="xs:string"/>
+                <xs:element name="status" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="cadastrarSateliteResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+                <xs:element name="mensagem" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- ===================== TIPO SATELITE ===================== -->
+    <xs:complexType name="SateliteType">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long"/>
+            <xs:element name="nome" type="xs:string"/>
+            <xs:element name="tipo" type="xs:string"/>
+            <xs:element name="altitude" type="xs:double"/>
+            <xs:element name="agencia" type="xs:string"/>
+            <xs:element name="status" type="xs:string"/>
+            <xs:element name="dataCadastro" type="xs:string"/>
+            <xs:element name="relatorio" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

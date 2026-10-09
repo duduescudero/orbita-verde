@@ -1,0 +1,172 @@
+### ============================================================
+### OrbitaVerde SOA - Testes da API REST + SOAP
+### Execute cada request clicando no play verde ao lado
+### ============================================================
+
+### 1. LISTAR TODOS OS ALERTAS
+GET http://localhost:8085/api/alertas
+Accept: application/json
+
+###
+
+### 2. BUSCAR ALERTA POR ID
+GET http://localhost:8085/api/alertas/1
+Accept: application/json
+
+###
+
+### 3. LISTAR ALERTAS ATIVOS (nao resolvidos)
+GET http://localhost:8085/api/alertas/ativos
+Accept: application/json
+
+###
+
+### 4. FILTRAR POR TIPO
+GET http://localhost:8085/api/alertas/tipo/QUEIMADA
+Accept: application/json
+
+###
+
+### 5. FILTRAR POR NIVEL
+GET http://localhost:8085/api/alertas/nivel/PERIGO
+Accept: application/json
+
+###
+
+### 6. RELATORIOS (demonstra polimorfismo OOP)
+GET http://localhost:8085/api/alertas/relatorios
+Accept: application/json
+
+###
+
+### 7. POST - CRIAR NOVO ALERTA (integra com SOAP internamente)
+POST http://localhost:8085/api/alertas
+Content-Type: application/json
+
+{
+  "tipo": "QUEIMADA",
+  "descricao": "Novo foco detectado no Pantanal",
+  "latitude": -17.8,
+  "longitude": -57.4,
+  "nivel": "PERIGO",
+  "sateliteOrigem": "TERRA",
+  "status": "ATIVO"
+}
+
+###
+
+### 8. PUT - ATUALIZAR ALERTA
+PUT http://localhost:8085/api/alertas/1
+Content-Type: application/json
+
+{
+  "tipo": "QUEIMADA",
+  "descricao": "Foco controlado - atualizando nivel",
+  "latitude": -3.4653,
+  "longitude": -62.2159,
+  "nivel": "ALERTA",
+  "sateliteOrigem": "TERRA",
+  "status": "ATIVO"
+}
+
+###
+
+### 9. PATCH - RESOLVER ALERTA
+PATCH http://localhost:8085/api/alertas/2/resolver
+Content-Type: application/json
+
+###
+
+### 10. DELETE - DELETAR ALERTA
+DELETE http://localhost:8085/api/alertas/5
+Accept: application/json
+
+###
+
+### 11. LISTAR SATELITES
+GET http://localhost:8085/api/satelites
+Accept: application/json
+
+###
+
+### 12. BUSCAR SATELITE POR ID
+GET http://localhost:8085/api/satelites/1
+Accept: application/json
+
+###
+
+### 13. POST - CRIAR SATELITE (via REST)
+POST http://localhost:8085/api/satelites
+Content-Type: application/json
+
+{
+  "nome": "LANDSAT-9",
+  "tipo": "LEO",
+  "altitude": 705.0,
+  "agencia": "NASA",
+  "status": "ATIVO"
+}
+
+###
+
+### 14. RELATORIOS DOS SATELITES (polimorfismo)
+GET http://localhost:8085/api/satelites/relatorios
+Accept: application/json
+
+###
+
+### ============================================================
+### SOAP - Web Service
+### ============================================================
+
+### 15. SOAP - CONSULTAR SATELITE (operacao 1)
+POST http://localhost:8085/ws
+Content-Type: text/xml
+
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                  xmlns:tns="http://fiap.com.br/orbitaverde/soap">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <tns:consultarSateliteRequest>
+      <tns:id>1</tns:id>
+    </tns:consultarSateliteRequest>
+  </soapenv:Body>
+</soapenv:Envelope>
+
+###
+
+### 16. SOAP - CADASTRAR SATELITE (operacao 2)
+POST http://localhost:8085/ws
+Content-Type: text/xml
+
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                  xmlns:tns="http://fiap.com.br/orbitaverde/soap">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <tns:cadastrarSateliteRequest>
+      <tns:nome>AMAZONIA-1</tns:nome>
+      <tns:tipo>SSO</tns:tipo>
+      <tns:altitude>752.0</tns:altitude>
+      <tns:agencia>INPE</tns:agencia>
+      <tns:status>ATIVO</tns:status>
+    </tns:cadastrarSateliteRequest>
+  </soapenv:Body>
+</soapenv:Envelope>
+
+###
+
+### 17. TESTE DE ERRO - ID inexistente (deve retornar 404 com JSON)
+GET http://localhost:8085/api/alertas/999
+Accept: application/json
+
+###
+
+### 18. TESTE DE ERRO - POST sem campos obrigatorios (deve retornar 400)
+POST http://localhost:8085/api/alertas
+Content-Type: application/json
+
+{
+  "tipo": "QUEIMADA"
+}
+
+###
